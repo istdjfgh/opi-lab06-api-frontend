@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Про проєкт{% endblock %}
+{% block content %}
+<section class="prose">
+    <h1>Про проєкт</h1>
+    <p>
+        Навчальний вебзастосунок для лабораторної роботи 06
+        «Інтеграція клієнтської частини з API та обробка помилок».
+        Серверна частина — Flask і SQLite, клієнтська — HTML, CSS і JavaScript без фреймворків.
+    </p>
+
+    <h2>Ендпоінти API</h2>
+    <table class="table">
+        <thead><tr><th>Метод</th><th>Адреса</th><th>Призначення</th></tr></thead>
+        <tbody>
+            <tr><td>GET</td><td><code>/api/health</code></td><td>перевірка роботи сервера</td></tr>
+            <tr><td>GET</td><td><code>/api/meta</code></td><td>категорії, сортування, обмеження полів</td></tr>
+            <tr><td>GET</td><td><code>/api/products</code></td><td>список товарів (пошук, фільтр, сортування)</td></tr>
+            <tr><td>GET</td><td><code>/api/products/&lt;id&gt;</code></td><td>один товар</td></tr>
+            <tr><td>POST</td><td><code>/api/products</code></td><td>створення товару</td></tr>
+            <tr><td>PUT</td><td><code>/api/products/&lt;id&gt;</code></td><td>оновлення товару</td></tr>
+            <tr><td>DELETE</td><td><code>/api/products/&lt;id&gt;</code></td><td>видалення товару</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Склад команди</h2>
+    <p>Роботу виконано одноосібно: серверну частину, клієнтську частину, тестування і звіт зробив автор репозиторію.</p>
+</section>
+{% endblock %}

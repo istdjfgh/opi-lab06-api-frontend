@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Демо API{% endblock %}
+{% block content %}
+<section class="page-head">
+    <div>
+        <p class="eyebrow">REST API + fetch()</p>
+        <h1>Демонстрація роботи API</h1>
+        <p class="lead">Каталог настільних ігор завантажується з <code>/api/products</code>. Додавайте, редагуйте й видаляйте товари — сторінка не перезавантажується.</p>
+    </div>
+    <p id="apiStatus" class="api-status" data-state="checking" role="status">
+        <span class="dot" aria-hidden="true"></span><span class="api-status-text">Перевіряю з'єднання…</span>
+    </p>
+</section>
+
+<!-- Повідомлення про успіх / помилку (спливають у правому верхньому куті) -->
+<div id="message" class="toast-region" aria-live="polite" aria-atomic="false"></div>
+
+<section class="stats" aria-label="Статистика каталогу">
+    <div class="stat"><span class="stat-value" id="statTotal">—</span><span class="stat-label">ігор у каталозі</span></div>
+    <div class="stat"><span class="stat-value" id="statInStock">—</span><span class="stat-label">у наявності</span></div>
+    <div class="stat"><span class="stat-value" id="statAvg">—</span><span class="stat-label">середня ціна</span></div>
+</section>
+
+<div class="demo-layout">
+    <!-- ФОРМА: додавання і редагування -->
+    <section class="card form-card" aria-labelledby="formTitle">
+        <h2 id="formTitle">Додати гру</h2>
+        <form id="addForm" novalidate>
+            <input type="hidden" id="productId">
+
+            <div class="field">
+                <label for="name">Назва <span class="req" aria-hidden="true">*</span></label>
+                <input id="name" name="name" type="text" autocomplete="off" required
+                       placeholder="Наприклад, Каркасон" aria-describedby="name-error">
+                <p class="field-error" id="name-error"></p>
+            </div>
+
+            <div class="field-row">
+                <div class="field">
+                    <label for="price">Ціна, грн <span class="req" aria-hidden="true">*</span></label>
+                    <input id="price" name="price" type="number" inputmode="decimal" step="0.01" min="0"
+                           required placeholder="990" aria-describedby="price-error">
+                    <p class="field-error" id="price-error"></p>
+                </div>
+                <div class="field">
+                    <label for="players">Гравців</label>
+                    <input id="players" name="players" type="text" placeholder="2–4" aria-describedby="players-error">
+                    <p class="field-error" id="players-error"></p>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="category">Категорія <span class="req" aria-hidden="true">*</span></label>
+                <select id="category" name="category" required aria-describedby="category-error">
+                    <option value="">— оберіть категорію —</option>
+                </select>
+                <p class="field-error" id="category-error"></p>
+            </div>
+
+            <div class="field">
+                <label for="description">Опис</label>
+                <textarea id="description" name="description" rows="3"
+                          placeholder="Коротко про гру" aria-describedby="description-error description-counter"></textarea>
+                <div class="field-meta">
+                    <p class="field-error" id="description-error"></p>
+                    <span class="counter" id="description-counter">0 / 500</span>
+                </div>
+            </div>
+
+            <label class="checkbox">
+                <input id="in_stock" name="in_stock" type="checkbox" checked>
+                <span>Є в наявності</span>
+            </label>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="submitBtn">Додати</button>
+                <button type="button" class="btn btn-ghost" id="cancelEditBtn" hidden>Скасувати</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- СПИСОК -->
+    <section class="list-section" aria-labelledby="listTitle">
+        <div class="toolbar">
+            <h2 id="listTitle" class="visually-hidden">Каталог</h2>
+            <label class="visually-hidden" for="searchInput">Пошук</label>
+            <input id="searchInput" type="search" placeholder="🔍 Пошук гри…" title="Пошук за назвою або описом" autocomplete="off">
+
+            <label class="visually-hidden" for="categoryFilter">Категорія</label>
+            <select id="categoryFilter"><option value="">Усі категорії</option></select>
+
+            <label class="visually-hidden" for="sortSelect">Сортування</label>
+            <select id="sortSelect"></select>
+
+            <button type="button" class="btn btn-ghost" id="refreshBtn" title="Завантажити список ще раз">↻ Оновити</button>
+        </div>
+
+        <p id="resultInfo" class="result-info" aria-live="polite"></p>
+        <div id="loading" class="loading" role="status"><span class="spinner" aria-hidden="true"></span> Завантаження…</div>
+        <div id="dataList" class="product-grid"></div>
+    </section>
+</div>
+
+<!-- Підтвердження видалення -->
+<dialog id="confirmDialog" class="dialog" aria-labelledby="confirmTitle">
+    <form method="dialog">
+        <h2 id="confirmTitle">Видалити гру?</h2>
+        <p id="confirmText"></p>
+        <div class="form-actions">
+            <button value="cancel" class="btn btn-ghost">Скасувати</button>
+            <button value="confirm" class="btn btn-danger" id="confirmYes">Видалити</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- Скрипт підключено наприкінці: на момент виконання всі елементи вже є на сторінці -->
+<script type="module" src="{{ url_for('static', filename='js/api-demo.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Головна{% endblock %}
+{% block content %}
+<section class="hero">
+    <p class="eyebrow">Лабораторна робота 06</p>
+    <h1>Настільні ігри для всієї компанії</h1>
+    <p class="lead">
+        «Кубик» — навчальний магазин на Flask і SQLite. Каталог зберігається в базі,
+        а сторінка «Демо API» працює з ним через REST API за допомогою <code>fetch()</code>:
+        показує список, додає, редагує й видаляє товари без перезавантаження сторінки.
+    </p>
+    <div class="hero-actions">
+        <a class="btn btn-primary" href="{{ url_for('pages.api_demo') }}">Відкрити демо API</a>
+        <a class="btn btn-ghost" href="{{ url_for('api.list_products') }}">Сирий JSON /api/products</a>
+    </div>
+</section>
+
+<section class="feature-grid" aria-label="Можливості">
+    <article class="feature">
+        <h2>⚡ Асинхронно</h2>
+        <p>Запити виконуються через <code>async/await</code>, сторінка не «зависає» під час очікування відповіді.</p>
+    </article>
+    <article class="feature">
+        <h2>🛡️ Надійно</h2>
+        <p>Перевірка <code>response.ok</code>, тайм-аут запиту, зрозумілі повідомлення, якщо сервер недоступний.</p>
+    </article>
+    <article class="feature">
+        <h2>✅ Валідація</h2>
+        <p>Однакові правила в браузері й на сервері: обмеження клієнт отримує з <code>GET /api/meta</code>.</p>
+    </article>
+</section>
+{% endblock %}

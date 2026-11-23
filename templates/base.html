@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Магазин настільних ігор «Кубик» — навчальний Flask-проєкт з REST API">
+    <title>{% block title %}Кубик{% endblock %} · магазин настільних ігор</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти до вмісту</a>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="logo" href="{{ url_for('pages.home') }}" aria-label="Кубик — на головну">
+            <span class="logo-mark" aria-hidden="true">⚄</span>
+            <span>Кубик</span>
+        </a>
+        <nav class="main-nav" aria-label="Головне меню">
+            {% set path = request.path %}
+            <a href="{{ url_for('pages.home') }}" {% if path == '/' %}aria-current="page"{% endif %}>Головна</a>
+            <a href="{{ url_for('pages.api_demo') }}" {% if path == '/api-demo' %}aria-current="page"{% endif %}>Демо API</a>
+            <a href="{{ url_for('pages.about') }}" {% if path == '/about' %}aria-current="page"{% endif %}>Про проєкт</a>
+        </nav>
+    </div>
+</header>
+
+<main id="main" class="container">
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        © {{ current_year }} «Кубик» · навчальний проєкт, лабораторна робота 06 (ОПІ)
+    </div>
+</footer>
+</body>
+</html>
